@@ -1,5 +1,4 @@
 import fix_yahoo_finance as yf
-import argparse
 import os
 import sys
 

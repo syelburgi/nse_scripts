@@ -25,6 +25,7 @@ if __name__ == "__main__":
         share = [x.strip() for x in share]
         watch_list = share
 
+    print("*****************************************************************************************")
     for share_name in watch_list:
         try:
             share = str(share_name) + ".NS"
@@ -53,3 +54,4 @@ if __name__ == "__main__":
                                                                                share_vol_ma[-1]))
         except Exception:
             continue
+    print("*****************************************************************************************")
