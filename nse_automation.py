@@ -1,4 +1,4 @@
-import fix_yahoo_finance as yf
+import yfinance as yf
 import os
 import sys
 
@@ -17,7 +17,6 @@ def print_message(msg):
     sys.stdout = devnull
     sys.stderr = devnull
 
-
 def init_print():
     global stdout, stderr, devnull
     devnull = open(os.devnull, "w")
@@ -27,6 +26,9 @@ def init_print():
     sys.stderr = devnull
 
 
+def sort_func(e):
+    return e['percentage']
+ 
 if __name__ == "__main__":
     init_print()
     periods = ["8mo", "2mo"]
@@ -34,15 +36,14 @@ if __name__ == "__main__":
     average = ["20wk", "20d"]
 
     path = os.path.dirname(os.path.realpath(__file__))
-    watch_path = path + '\my_portfolio.txt'
+    watch_path = path + '/my_portfolio.txt'
     history = -1
 
-    print_message(watch_path)
     with open(watch_path) as f:
         share = f.readlines()
         share = [x.strip() for x in share]
         watch_list = share
-
+    
     for i in range(0, len(periods)):
         period = periods[i]
         interval = intervals[i]
@@ -68,6 +69,7 @@ if __name__ == "__main__":
 
         print_message("****Shares Near {} moving average**********".format(average[i]))
         i = 1
+        action_list.sort(key=sort_func)
         for share in action_list:
             print_message("{}.{} {:.2f}% below MA".format(i, share['share'], share['percentage']))
             i += 1
